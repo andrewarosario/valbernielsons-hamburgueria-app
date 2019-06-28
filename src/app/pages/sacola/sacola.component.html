@@ -1,0 +1,36 @@
+<div class="jumbotron jumbotron-fluid" *ngIf="!items.length else cardapio">
+  <div class="container">
+    <h2 class="display-2">Sua sacola está vazia :(</h2>
+    <p class="lead">Confira nosso <a routerLink="/cardapio">cardápio</a> para adicionar items à sua sacola.</p>
+  </div>
+</div>
+
+<ng-template #cardapio>
+  <h1>Minha Sacola</h1>
+
+  <div class="table-responsive">
+    <table class="table">
+      <tbody>
+        <tr *ngFor="let item of items">
+          <th>({{ item.quantidade }}x) {{ item.menuItem.titulo }}</th>
+          <td class="text-right">{{item.valor | currency: 'BRL' }}</td>
+          <td class="text-right">
+            <a (click)="removerItem(item)" class="btn btn-sm danger" style="cursor: pointer">
+              <i class="fa fa-remove"></i>
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <th>Total:</th>
+          <td class="text-right">{{ totalSacola | currency: 'BRL' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pull-right">
+    <button (click)="limpar()" type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Limpar</button>
+    <button (click)="fecharPedido()" class="btn btn-success"><i class="fa fa-credit-card"></i> Fechar Pedido</button>
+  </div>
+
+</ng-template>

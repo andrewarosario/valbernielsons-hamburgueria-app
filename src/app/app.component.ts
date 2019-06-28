@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StartService } from './services/start.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'projeto-dsin';
+  title = 'Valbernielsons Hamburgueria';
+
+  constructor(private startService: StartService) {
+    this.startService.cadastraDadosIniciais();
+  }
 }

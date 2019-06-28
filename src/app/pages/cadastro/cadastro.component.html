@@ -1,0 +1,18 @@
+<div class="login-form">
+  <form [formGroup]="cadastroForm" (submit)="cadastrar()">
+      <h2 class="text-center">Cadastrar usuário</h2>
+      <div class="form-group">
+        <input type="text" formControlName="email" class="form-control" placeholder="Email" required="required">
+    </div>
+      <div class="form-group">
+          <input type="text" formControlName="nome" class="form-control" placeholder="Usuário" required="required">
+      </div>
+      <div class="form-group">
+          <input type="password" formControlName="senha" class="form-control" placeholder="Senha" required="required">
+      </div>
+      <div class="form-group">
+          <button type="submit" class="btn btn-danger btn-block">Cadastrar</button>
+      </div>
+  </form>
+  <p class="text-center"><a routerLink="/login">Já possui uma conta? Entre agora!</a></p>
+</div>

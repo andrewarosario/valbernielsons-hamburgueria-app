@@ -1,0 +1,64 @@
+<h2>Histórico de Pedidos</h2>
+
+<div class="input-group-prepend mb-3">
+  <label class="input-group-text" for="inputGroupSelect01">Período</label>
+  <input type="text" ngxDaterangepickerMd [locale]="{ applyLabel: 'ok', format: 'DD/MM/YYYY' }" [(ngModel)]="periodo"
+    class="form-control" />
+  <div class="input-group">
+    <button (click)="filtrarPeriodo()" class="btn btn-outline-secondary" type="button" id="button-addon2"><i
+        class="fa fa-search"></i>Filtrar</button>
+  </div>
+</div>
+
+<div class="accordion" id="accordionExample">
+  <div *ngFor="let pedido of pedidos" class="card">
+    <div class="card-header" id="headingOne">
+      <div class="pull-left">
+        <h3 class="mb-0">
+          <small *ngIf="isAdmin()">{{ pedido.usuario.nome }}</small>
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            {{ formataData(pedido.createDate) }} - Pedido #{{ pedido.numero }}
+          </button>
+        </h3>
+      </div>
+      <div class="pull-right">
+
+        <div *ngIf="isAdmin()" class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label (click)="alterarStatus(pedido,'aberto')" class="btn btn-secondary btn-sm" [ngClass]="{active: pedido.status == 'aberto'}">
+            <input type="radio"> Em Aberto
+          </label>
+          <label (click)="alterarStatus(pedido,'andamento')" class="btn btn-secondary btn-sm" [ngClass]="{active: pedido.status == 'andamento'}">
+            <input type="radio"> Em Andamento
+          </label>
+          <label (click)="alterarStatus(pedido,'concluido')" class="btn btn-secondary btn-sm" [ngClass]="{active: pedido.status == 'concluido'}">
+            <input type="radio"> Concluído
+          </label>
+        </div>
+
+        <span *ngIf="!isAdmin()" class="badge badge-{{ retornaClasseStatus(pedido.status) }}">{{ pedido.status }}</span>
+      </div>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample"
+      class="table-responsive">
+      <table class="table">
+        <tbody>
+          <tr *ngFor="let item of pedido.items">
+            <th>({{ item.quantidade }}x) {{ item.item.titulo }}</th>
+            <td class="text-right">{{ preco(item) | currency: 'BRL' }}</td>
+            <!-- <td class="text-right">
+              <a (click)="removerItem(item)" class="btn btn-sm danger" style="cursor: pointer">
+                <i class="fa fa-remove"></i>
+              </a>
+            </td> -->
+          </tr>
+          <tr>
+            <th>Total:</th>
+            <td class="text-right">{{ total(pedido.items) | currency: 'BRL' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
